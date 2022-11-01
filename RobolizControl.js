@@ -1,14 +1,15 @@
 var Emergency = false;
 var CameraNum= 1;
-
+var RepeatTime = 1000;
 
 function mainRunning(){
     if(!Emergency){
         //Put in here the other functions that needs to repeatively happen.
-        setTimeout(mainRunning(),100);
-        console.log("Running");
+        console.log("Running");        
+        setTimeout(mainRunning,RepeatTime);
     }
 }
+mainRunning();
 
 $('#Emergency').click(function(){
     if(!Emergency){
