@@ -2,35 +2,39 @@
 <html>
     <head>
         <title id="Top">Roboliz command Console</title>
-        <link rel="stylesheet" type="text/css" href="robolizCss.css">
+        <link rel="stylesheet" type="text/css" href="/static/robolizCss.css">
         <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
         
     </head>
     <body onkeydown="
         if(window.event.keycode == '65' ){
-            motionAcceleration(1,'A');
+            Keys('A');
         }else if(window.event.keycode == '87' ){
-            motionAcceleration(1,'W');
+            Keys('W');
         }else if(window.event.keycode == '83' ){
-            motionAcceleration(1,'S');            
+            Keys('S');            
         }else if(window.event.keycode == '68' ){
-            motionAcceleration(1,'D');
+            Keys('D');
         }else if(window.event.keycode == '80' ){
-            changeCamera();
-        }else if(window.event.keycode == '69' ){
-            cameraMovement(1,'E');
-        }else if(window.event.keycode == '81' ){
-            cameraMovement(1,'Q');
-        }    
-    ">
+            Keys('P');
+        }else if(window.event.keycode == '74' ){
+            Keys('J');
+        }else if(window.event.keycode == '75' ){
+            Keys('K');
+        } 
+    " onkeypress="DOWN();"
+      onkeyup="UPS();">
         <div class="mainDiv">
             <div class="Top">
                 <h1 class = "Tital">Remote Access Video Robot</h1>
             </div>
             <div class = "VideoScreen">
                 <p class="Dissappear-later">Make sure the meet actually goes through</p>
-                <iframe src="https://meet.google.com/wms-wtog-grr" title="Google Meet" id="screen"></iframe>
+                
+                <video autoplay="true" id="videoElement">
+
+                </video>
                 <!--Put in a solid zoom/classroom with one url... got to find that...-->
             </div>
             <div class = "bottom">
@@ -39,7 +43,7 @@
                 </div>
                 <div id="middle" class="bottomdiv">
                     <div id="Distance">
-                        <h3 class="above">Distance to the closest object:</h3>
+                        <h3 class="above">Distance from to the closest object:</h3>
                         <p class="below">{{distance}}</p>
                     </div>
                     <div id="power">
@@ -50,14 +54,15 @@
                         <p>Error log:</p>
                         {% for e in errors %}
                         <p class="errors">{{e}}</p>
-                        {% endfor % }
+                        {% endfor %}
                     </div>
                 </div>
                 <div id="right" class="bottomdiv">
                     <h3>Controls:</h3>
                     <p>To move: use WASD</p>
-                    <p>Turning: Q&E</p>
-                    <p>All other features are coming soon...</p>
+                    <p>Turning Mid Camera: J&K</p>
+                    <p>To change Cameras: P</p>
+                    <p>All other features are coming soon...</p><!-- O IS A GOOD KEY!-->
                 </div>
 
             </div>
@@ -67,7 +72,7 @@
 
         </div>
     </body>
-    <script src="RobolizControl.js"></script>
+    <script src="/static/RobolizControl.js"></script>
     
 
 </html>
