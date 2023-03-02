@@ -7,24 +7,27 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
         
     </head>
-    <body onkeydown="
-        if(window.event.keycode == '65' ){
+    <body onkeypress="
+     console.log('pain');
+        if(event.keyCode == '97' ){
             Keys('A');
-        }else if(window.event.keycode == '87' ){
+        }else if(event.keyCode == '119' ){
             Keys('W');
-        }else if(window.event.keycode == '83' ){
+        }else if(event.keyCode == '115' ){
             Keys('S');            
-        }else if(window.event.keycode == '68' ){
+        }else if(event.keyCode == '100' ){
             Keys('D');
-        }else if(window.event.keycode == '80' ){
+        }else if(event.keyCode == '112' ){
             Keys('P');
-        }else if(window.event.keycode == '74' ){
+        }else if(event.keyCode == '106' ){
             Keys('J');
-        }else if(window.event.keycode == '75' ){
+        }else if(event.keyCode == '107' ){
             Keys('K');
-        } 
-    " onkeypress="DOWN();"
-      onkeyup="UPS();">
+        }else{
+            console.log('wrong');
+            console.log(event.keyCode);
+        }
+    ">
         <div class="mainDiv">
             <div class="Top">
                 <h1 class = "Tital">Remote Access Video Robot</h1>
