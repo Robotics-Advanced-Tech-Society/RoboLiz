@@ -1,3 +1,4 @@
+/*body stuff*/
 body{
   background:#9883BD;
 
@@ -11,6 +12,42 @@ body{
     text-align:center;
     background-color:black;
 }
+
+.mainDiv{
+  height:100vh;
+  width:100vw;
+}
+/*video stuff*/
+.VideoScreen{
+  position:relative;
+  top:0%;
+  height:70%;
+}
+.videoElement{
+  width:40%;
+  margin-left:10%;
+  margin-right:10%;
+  height:70%;
+}
+#screen-left{
+  position:absolute;
+  left:8%;
+  top:0%;
+}
+#screen-right{
+  position:absolute;
+  right:8%;
+}
+
+
+
+
+
+/*Left box*/
+#left{
+  width:20%;
+  left:0px;
+}
 #Emergency{
   color:black;
   background-color: red;
@@ -22,12 +59,12 @@ body{
   position:absolute;
   top:70%;
   left:15%;
+
 }
-#screen{
-  width:80%;
-  margin-left:10%;
-  margin-right:10%;
-  height:70%;
+/*Middle*/
+#middle{
+  width:50%;
+  right:30%;
 }
 .errorblock{
   position: absolute;
@@ -35,31 +72,25 @@ body{
   top:0%;
   background-color: black;
   color:white;
-  width:50%;
   height:95%;
   border: 5px solid black;
   border-radius:3px;
   margin:auto;
+  width:50%;
 }
 .errors{
   font-size:12px;
   color:red;
 }
 
-
-
-#left{
-  width:20%;
-  left:0px;
-}
-#middle{
-  width:50%;
-  right:30%;
-}
+/*Right stuff*/
 #right{
   width:30%;
   right:0px;
 }
+
+
+/*Bottom stuff*/
 .bottomdiv{
   height:100%;
   position:absolute;
@@ -68,9 +99,9 @@ body{
   width:99%;
   border: 2px solid black;
   border-radius:3px;
-  height:200px;
-  position:absolute;
-  bottom:10%;
+  height:20%;
+  position:relative;
+
 }
 
 
