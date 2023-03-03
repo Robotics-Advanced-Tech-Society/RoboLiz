@@ -9,7 +9,7 @@ url="test.test"
 
 @app.route('/')##, method=["GET","POST"]
 def googleMeet():
-    return render_template('RobolizConsole.html', power = "10%", distance = "10m",error= ["Testing","testing","Test"] )
+    return render_template('RobolizConsole.html', power = "LOADING!", distance = "LOADING!",error= ["Starting Robot","Powering Up","Starting Video link","Robot is booting", "Enjoy your day!"] )
 
 
 
