@@ -1,19 +1,21 @@
 //const { io } = require("socket.io-client");
 var Emergency = false;
-var CameraNum= 1;
-var RepeatTime = 100;
+var CameraNum = 1;
+var RepeatTime = 1;
 //var socket = io();
 
 //AJAX STUFF START UP
 var xhttp = new XMLHttpRequest()
 var responce;
 var serverURL = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"; //Got to get that eventually...
-var FIFTEEN = 0;
+var TWENTYFIVE = 0;
 
 //Commanded Motion:
 // 1 = forward, 2 = backwards, 3 = rotate right, 4 = rotate left, 5 = Camera right, 6 = Camera left, 7 = Camera Change
 const commands = ["NEW"]; // Start all new chains with NEW, and an END..
 const delays = ["N"]; //N means its a command with no delay, and any other number is in .01 seconds... 
+var Added = false;
+
 
 
 
@@ -22,17 +24,20 @@ function mainRunning(){
     if(!Emergency){
         //Put in here the other functions that needs to repeatively happen.
         //console.log("Running Code");        
-        if(FIFTEEN == 15){
-            FIFTEEN = 0;
-            //Serverpush function
-            console.log(commands);
-            
-        }FIFTEEN++;
+        if(TWENTYFIVE == 25){
+            TWENTYFIVE = 0;
+            serverpush();            
+        }TWENTYFIVE++;
         
         setTimeout(mainRunning,RepeatTime);
     }
 }
 mainRunning();
+//makes the small intro text appear...
+setTimeout(function(){
+    $(".Dissappear-later").css("display","none");
+},5000);
+
 
 
 
@@ -40,33 +45,54 @@ mainRunning();
 function Keys(IN){
     if (IN == "W") {
         commands[commands.length] = 1;
-        console.log('1');
     } else if (IN == "A") {
         commands[commands.length] = 3;
-        console.log('1');
     } else if (IN == "S") {
         commands[commands.length] = 2;
-        console.log('1');
     } else if (IN == "D") {
         commands[commands.length] = 4;
-        console.log('1');
     } else if (IN == "J") {
         commands[commands.length] = 5;
-        console.log('1');
     } else if (IN == "K") {
         commands[commands.length] = 6;
-        console.log('1');
     } else if (IN == "P") {
         commands[commands.length] = 7;
-        console.log('7');
     } else {
         console.log("UH HO");
     }
+    Added = true;
    
 }
 //these start the counting of how long a key is pressed... NOT SPACING OUT WITH LIKE THE 25 Seconds thing...
 
 
+
+
+
+// PREPPING SERVER PUSH
+function serverpush(){
+    // Do the push ajax... 
+    if (Added && commands.length < 7) {
+        commands[commands.length] = "END";
+        console.log(commands);
+        Added = false;
+        data = {'COMMANDS': commands,
+                'Password': "LetsaGO",
+                //video and aduio goes here
+            };
+    }else{
+        data = {'COMMANDS': "['NO']",
+                'Password':"letsaGO",
+                //Video and audto goes here
+            }
+    }
+    //ajax goes here
+    //$.post(serverURL,data);
+    commands.length=0;
+    commands[0]="NEW";
+}
+
+// add in an emergency push request for the emergency stop button!
 
 
 //LISTENING TO AJAX
@@ -84,9 +110,8 @@ xhttp.onreadystatechange = function(){
 
 
 
-
 //Personalized camerafeed...
-var video = document.querySelector("#videoElement");
+var video = document.querySelector(".videoElement");
 
 if (navigator.mediaDevices.getUserMedia) {
   navigator.mediaDevices.getUserMedia({ video: true, audio :true })
@@ -104,7 +129,9 @@ if (navigator.mediaDevices.getUserMedia) {
 $('#Emergency').click(function(){   //Incase of emergency stop
     if(!Emergency){
         Emergency = true;
+        
         $("#Emergency").text("Begin Robot Again!");
+        
     }else{
         Emergency = false;
         alert("robot is starting again...");
@@ -117,6 +144,7 @@ function ETJ(err){
     if(!Emergency){Emergency = true;}
     $('#Emergency').text(err);
 }
+
 
 
 
