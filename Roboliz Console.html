@@ -7,25 +7,21 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
         
     </head>
-    <body onkeypress="
-     console.log('pain');
-        if(event.keyCode == '97' ){
+    <body onkeydown="
+        if(event.keyCode == '65' ){
             Keys('A');
-        }else if(event.keyCode == '119' ){
+        }else if(event.keyCode == '87' ){
             Keys('W');
-        }else if(event.keyCode == '115' ){
+        }else if(event.keyCode == '83' ){
             Keys('S');            
-        }else if(event.keyCode == '100' ){
+        }else if(event.keyCode == '68' ){
             Keys('D');
-        }else if(event.keyCode == '112' ){
+        }else if(event.keyCode == '80' ){
             Keys('P');
-        }else if(event.keyCode == '106' ){
+        }else if(event.keyCode == '74' ){
             Keys('J');
-        }else if(event.keyCode == '107' ){
+        }else if(event.keyCode == '75' ){
             Keys('K');
-        }else{
-            console.log('wrong');
-            console.log(event.keyCode);
         }
     ">
         <div class="mainDiv">
@@ -35,10 +31,13 @@
             <div class = "VideoScreen">
                 <p class="Dissappear-later">Make sure the meet actually goes through</p>
                 
-                <video autoplay="true" id="videoElement">
+                <video autoplay="true" class="videoElement" id="screen-left">
 
                 </video>
-                <!--Put in a solid zoom/classroom with one url... got to find that...-->
+                <video autoplay="true" class="videoElement" id="screen-right">
+
+                </video>
+                
             </div>
             <div class = "bottom">
                 <div id="left" class="bottomdiv">
@@ -55,8 +54,8 @@
                     </div>
                     <div class="errorblock">
                         <p>Error log:</p>
-                        {% for e in errors %}
-                        <p class="errors">{{e}}</p>
+                        {% for e in range(0,5) %}
+                            <p class="errors" id="E{{e}}">{{error[e]}}</p>
                         {% endfor %}
                     </div>
                 </div>
