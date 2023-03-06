@@ -16,7 +16,8 @@ const commands = ["NEW"]; // Start all new chains with NEW, and an END..
 const delays = ["N"]; //N means its a command with no delay, and any other number is in .01 seconds... 
 var Added = false;
 
-
+//Video receiver stuff
+var volume = 10; //Make sure to set to 50 later...
 
 
 
@@ -111,7 +112,7 @@ xhttp.onreadystatechange = function(){
 
 
 //Personalized camerafeed...
-var video = document.querySelector(".videoElement");
+var video = document.querySelector("#MiniScreen");
 
 if (navigator.mediaDevices.getUserMedia) {
   navigator.mediaDevices.getUserMedia({ video: true, audio :true })
@@ -122,6 +123,24 @@ if (navigator.mediaDevices.getUserMedia) {
       console.log("Something went wrong!");
     });
 }
+
+//Volume settings, part of personized video...
+function volumeupdate(){
+    video.volume = volume/100;
+    $("#CURRENTVOLUME").text(""+(volume)+"%");
+}
+$("#upVol").click(function(){
+    if(volume<100){
+        volume=volume+2;
+        volumeupdate();
+    }
+});
+$("#downVol").click(function(){
+    if(volume>0){
+        volume=volume - 2;
+        volumeupdate();
+    }
+});
 
 
 //Emergency Error handleing
@@ -145,7 +164,10 @@ function ETJ(err){
     $('#Emergency').text(err);
 }
 
-
+function REMOVEVIDEOBACKGROUND(){
+    $(".videoElement").css("background-color","transparent");
+    console.log("fine... you just don't like style");
+}
 
 
 
