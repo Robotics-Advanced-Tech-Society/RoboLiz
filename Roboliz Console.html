@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title id="Top">Roboliz command Console</title>
+        <title id="Top">Roboliz Command Console</title>
         <link rel="stylesheet" type="text/css" href="/static/robolizCss.css">
         <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
@@ -37,15 +37,28 @@
                 <video autoplay="true" class="videoElement" id="screen-right">
 
                 </video>
+                <video autoplay="true" class="videoElement" id="MiniScreen">
+
+                </video>
                 
             </div>
             <div class = "bottom">
                 <div id="left" class="bottomdiv">
+                    <div class = "MiniDiv">
+                        <h3>Volume: </h3>
+                        <h2 id="CURRENTVOLUME">50%</h2>
+                        <button class = "controlBut" id="upVol">+</button>
+                        <button class = "controlBut" id="downVol"> - </button>
+                    </div>
+                    <div class = "MiniDiv" style="right:5%;">
+                        <button class ="controlBut" id="mute"><img id = "muteimage" src="/static/nonmuted.png"></button>
+                        <button class ="controlBut" id="camera"><img id="cameraimage" src="/static/Camera.png"></button>
+                    </div>
                     <button class = "But" id = "Emergency">EMERGENCY STOP!</button>
                 </div>
                 <div id="middle" class="bottomdiv">
                     <div id="Distance">
-                        <h3 class="above">Distance from to the closest object:</h3>
+                        <h3 class="above">Closest object:</h3>
                         <p class="below">{{distance}}</p>
                     </div>
                     <div id="power">
