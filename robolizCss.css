@@ -1,4 +1,13 @@
+/* I NEED TO SCALE THE BOTTOM BAR!*/
+
+
+
 /*body stuff*/
+
+
+
+
+
 body{
   background:#9883BD;
 
@@ -12,6 +21,9 @@ body{
     text-align:center;
     background-color:black;
 }
+.Top{
+  margin-bottom:1%;
+}
 
 .mainDiv{
   height:100vh;
@@ -21,22 +33,28 @@ body{
 .VideoScreen{
   position:relative;
   top:0%;
-  height:70%;
+  height:68%;
+  margin-bottom:1%;
 }
 .videoElement{
-  width:40%;
-  margin-left:10%;
-  margin-right:10%;
+  width:45%;
   height:70%;
+  background-color: #73638f;
+  position:absolute;
+  border-radius:5px;
 }
 #screen-left{
-  position:absolute;
-  left:8%;
+  left:3%;
   top:0%;
 }
 #screen-right{
-  position:absolute;
-  right:8%;
+  right:3%;
+  top:0%;
+}
+#MiniScreen{
+  height:30%;
+  top:70%;
+  right:27%;
 }
 
 
@@ -45,7 +63,6 @@ body{
 
 /*Left box*/
 #left{
-  width:20%;
   left:0px;
 }
 #Emergency{
@@ -55,16 +72,47 @@ body{
   border: black 3px solid;
   font-size:10px;
   height:50px;
-  width:70%;
+  width:50%;
   position:absolute;
   top:70%;
-  left:15%;
-
+  left:5%;
+  font-size:100%;
 }
+.MiniDiv{
+  position:absolute;
+  margin-left:10%;
+  width:40%;
+  height:70%;
+}
+.controlBut{
+  background-color:#FF6191;
+  font-size:30px;
+  margin-right:10%;
+  width:30%;
+  height:20%;
+}
+#CURRENTVOLUME{
+  margin-bottom:5%;
+}
+#mute, #camera{
+  border:black 3px solid;
+  height: 45%;
+  margin-right:25%;
+  margin-left:25%;
+  margin-top:5%;
+  width:60%;
+  
+}
+#muteimage, #cameraimage{
+  height:70%;
+  margin:10%;
+}
+
+
 /*Middle*/
 #middle{
   width:50%;
-  right:30%;
+  right:25%;
 }
 .errorblock{
   position: absolute;
@@ -85,13 +133,13 @@ body{
 
 /*Right stuff*/
 #right{
-  width:30%;
-  right:0px;
+  right:0%;
 }
 
 
 /*Bottom stuff*/
 .bottomdiv{
+  width:25%;
   height:100%;
   position:absolute;
 }
@@ -101,7 +149,7 @@ body{
   border-radius:3px;
   height:20%;
   position:relative;
-
+  bottom:0px;
 }
 
 
