@@ -18,7 +18,10 @@ var Added = false;
 
 //Video receiver stuff
 var volume = 10; //Make sure to set to 50 later...
-
+var camAllow = true;
+var micAllow = true;
+const MediaRecord = new MediaRecorder(stream);
+let chunks = [];
 
 
 function mainRunning(){
@@ -73,24 +76,26 @@ function Keys(IN){
 // PREPPING SERVER PUSH
 function serverpush(){
     // Do the push ajax... 
+    MediaRecord.requestData();
     if (Added && commands.length < 7) {
         commands[commands.length] = "END";
         console.log(commands);
         Added = false;
         data = {'COMMANDS': commands,
                 'Password': "LetsaGO",
-                //video and aduio goes here
+                'Chunks':chunks
             };
     }else{
         data = {'COMMANDS': "['NO']",
                 'Password':"letsaGO",
-                //Video and audto goes here
+                'Chunks':chunks
             }
     }
     //ajax goes here
     //$.post(serverURL,data);
     commands.length=0;
     commands[0]="NEW";
+    chunks.length=0;
 }
 
 // add in an emergency push request for the emergency stop button!
@@ -109,9 +114,7 @@ xhttp.onreadystatechange = function(){
 
 
 
-
-
-//Personalized camerafeed...
+//Personalized camerafeed +Videorecording...
 var video = document.querySelector("#MiniScreen");
 
 if (navigator.mediaDevices.getUserMedia) {
@@ -123,11 +126,19 @@ if (navigator.mediaDevices.getUserMedia) {
       console.log("Something went wrong!");
     });
 }
+mediaRecorder.ondataavailable = (e) => {
+    chunks.push(e.data);
+};
 
-//Volume settings, part of personized video...
+
+
 function volumeupdate(){
     video.volume = volume/100;
     $("#CURRENTVOLUME").text(""+(volume)+"%");
+}
+function volumeupdate(vols){
+    video.volume = vols/100;
+    $("#CURRENTVOLUME").text(""+(vols)+"%");
 }
 $("#upVol").click(function(){
     if(volume<100){
@@ -141,6 +152,9 @@ $("#downVol").click(function(){
         volumeupdate();
     }
 });
+
+
+
 
 
 //Emergency Error handleing
@@ -164,6 +178,10 @@ function ETJ(err){
     $('#Emergency').text(err);
 }
 
+
+
+
+//misc
 function REMOVEVIDEOBACKGROUND(){
     $(".videoElement").css("background-color","transparent");
     console.log("fine... you just don't like style");
