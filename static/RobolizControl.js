@@ -13,15 +13,27 @@ var TWENTYFIVE = 0;
 //Commanded Motion:
 // 1 = forward, 2 = backwards, 3 = rotate right, 4 = rotate left, 5 = Camera right, 6 = Camera left, 7 = Camera Change
 const commands = ["NEW"]; // Start all new chains with NEW, and an END..
-const delays = ["N"]; //N means its a command with no delay, and any other number is in .01 seconds... 
 var Added = false;
 
 //Video receiver stuff
 var volume = 10; //Make sure to set to 50 later...
 var camAllow = true;
 var micAllow = true;
-const MediaRecord = new MediaRecorder(stream);
+var recording = false;
+let MediaRecord;
 let chunks = [];
+
+/*
+Notes to self:
+Set up a stop for recording on emergency stop
+maybe log in page
+Kill code
+Remove Audio test part of personal camera... or atleast remove the feed back...
+ajax
+learn node.js for database manipulation...
+
+*/
+
 
 
 function mainRunning(){
@@ -36,13 +48,10 @@ function mainRunning(){
         setTimeout(mainRunning,RepeatTime);
     }
 }
+
+//Beginning start functions...
 mainRunning();
-//makes the small intro text appear...
-setTimeout(function(){
-    $(".Dissappear-later").css("display","none");
-},5000);
-
-
+startVideo(true, true);
 
 
 //Handleing inputs:
@@ -76,7 +85,9 @@ function Keys(IN){
 // PREPPING SERVER PUSH
 function serverpush(){
     // Do the push ajax... 
-    MediaRecord.requestData();
+    if(recording && MediaRecord.status == "active"){
+        MediaRecord.requestData();
+    }
     if (Added && commands.length < 7) {
         commands[commands.length] = "END";
         console.log(commands);
@@ -86,7 +97,7 @@ function serverpush(){
                 'Chunks':chunks
             };
     }else{
-        data = {'COMMANDS': "['NO']",
+        data = {'COMMANDS': "['NA']",
                 'Password':"letsaGO",
                 'Chunks':chunks
             }
@@ -115,22 +126,47 @@ xhttp.onreadystatechange = function(){
 
 
 //Personalized camerafeed +Videorecording...
-var video = document.querySelector("#MiniScreen");
-
-if (navigator.mediaDevices.getUserMedia) {
-  navigator.mediaDevices.getUserMedia({ video: true, audio :true })
-    .then(function (stream) {
-      video.srcObject = stream;
-    })
-    .catch(function (err0r) {
-      console.log("Something went wrong!");
-    });
+var videos = document.querySelector("#MiniScreen");
+function startVideo(Vid, Aud){
+    if(Vid || Aud){
+    if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: Vid, audio : Aud })
+          .then(function (stream) {
+            videos.srcObject = stream;
+            videos.muted = true; // REMOVE THIS IF YOU WANT TO TEST AUDIO...
+            MediaRecord = new MediaRecorder(stream);
+            recording = true;
+          })
+          .catch(function (err0r) {
+            console.log("Something went wrong!"+err0r);
+          });
+      }
+      if(!Vid){
+      }
+    }
 }
-mediaRecorder.ondataavailable = (e) => {
-    chunks.push(e.data);
-};
+if(recording){
+    MediaRecord.ondataavailable = (e) => {
+        chunks.push(e.data);
+    };
+}
+
+function vidEnd(){
+    stream = videos.srcObject;
+    stream.getTracks().forEach(function(track) {
+        track.stop();
+      });
+    recording = false;
+}
+
+function restartStream(){
+    vidEnd();
+    startVideo(camAllow,micAllow);
+}
 
 
+
+//REMEMBER THAT THESE VIDEO IS DIFFERENT FROM THE STREAM VIDEO... STREAM VIDEO IS VIDEOS not VIDEO
 
 function volumeupdate(){
     video.volume = volume/100;
@@ -153,6 +189,18 @@ $("#downVol").click(function(){
     }
 });
 
+$("#mute").click(function(){
+    micAllow = !micAllow;
+    if(micAllow){$("#muteimage").attr('src',"/static/nonmuted.png");}
+    if(!micAllow){$("#muteimage").attr('src',"/static/muted.png");}
+    restartStream();
+});
+$("#camera").click(function(){
+    camAllow = !camAllow;
+    if(camAllow){$("#cameraimage").attr('src',"/static/Camera.png");}
+    if(!camAllow){$("#cameraimage").attr('src',"/static/NOCAMERA.png");}
+    restartStream();
+});
 
 
 
@@ -162,7 +210,6 @@ $("#downVol").click(function(){
 $('#Emergency').click(function(){   //Incase of emergency stop
     if(!Emergency){
         Emergency = true;
-        
         $("#Emergency").text("Begin Robot Again!");
         
     }else{
